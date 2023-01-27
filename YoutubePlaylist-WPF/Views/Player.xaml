@@ -7,14 +7,36 @@
              xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="Button" x:Key="ControlButton">
+            <Setter Property="Margin" Value="2 0"/>
+            <Setter Property="Width" Value="64"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100px"/>
-            <RowDefinition/>
+            <RowDefinition Height="300px"/>
+            <RowDefinition Height="50px"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding CurrentPlaylistItem.URL}"/>
-        <wpf:WebView2 Grid.Row="2"></wpf:WebView2>
-
+        <Label Grid.Row="0" Content="{Binding CurrentPlaylistItem.URL}"/>
+        <Border  Grid.Row="1" BorderThickness="2" BorderBrush="Black" Width="300" Height="300">
+            <wpf:WebView2 DefaultBackgroundColor="Black"></wpf:WebView2>
+        </Border>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Style="{StaticResource ControlButton}">Previous</Button>
+            <Button Style="{StaticResource ControlButton}">Play</Button>
+            <Button Style="{StaticResource ControlButton}">Pause</Button>
+            <Button Style="{StaticResource ControlButton}">Next</Button>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

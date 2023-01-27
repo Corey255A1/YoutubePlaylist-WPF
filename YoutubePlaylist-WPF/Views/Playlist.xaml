@@ -6,11 +6,60 @@
              xmlns:local="clr-namespace:YoutubePlaylistWPF.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="150"/>
+        </Style>
+        <Style TargetType="Button" x:Key="ControlButton">
+            <Setter Property="Margin" Value="2 0"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="AdderButton">
+            <Setter Property="Width" Value="128"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="XButton">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="DarkRed"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="PlayButton">
+            <Setter Property="Background" Value="DarkGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+
+    </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentPlaylistItem}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
+            <Button Style="{StaticResource AdderButton}">Add To Top</Button>
+            <Button Style="{StaticResource AdderButton}">Add To Bottom</Button>
+        </StackPanel>
+        <ListView Grid.Row="1" ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentPlaylistItem}" HorizontalAlignment="Center">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding URL}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="350"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Button Style="{StaticResource ControlButton}">UP</Button>
+                            <Button Style="{StaticResource ControlButton}">DOWN</Button>
+                            <Button Style="{StaticResource PlayButton}">PLAY</Button>
+                            <TextBox Text="{Binding URL}"/>
+
+                        </StackPanel>
+                        <Button Style="{StaticResource XButton}" Grid.Column="1">X</Button>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
