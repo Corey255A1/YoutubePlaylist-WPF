@@ -31,8 +31,10 @@ namespace YoutubePlaylistWPF.Controllers
         }
 
 
+        public PlaylistCommand PlayItemCommand { get; set; }
 
         public PlaylistController() {
+            PlayItemCommand = new PlaylistCommand(PlayItem);
             Playlist = new ObservableCollection<PlaylistItem>()
             {
                 new PlaylistItem()
@@ -55,5 +57,9 @@ namespace YoutubePlaylistWPF.Controllers
             CurrentPlaylistItem = Playlist[1];
         }
 
+        private void PlayItem(PlaylistItem item)
+        {
+            CurrentPlaylistItem = item;
+        }
     }
 }
