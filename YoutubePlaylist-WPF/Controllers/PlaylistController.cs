@@ -51,6 +51,8 @@ namespace YoutubePlaylistWPF.Controllers
                     ID=3
                 }
             };
+
+            CurrentPlaylistItem = Playlist[1];
         }
 
     }

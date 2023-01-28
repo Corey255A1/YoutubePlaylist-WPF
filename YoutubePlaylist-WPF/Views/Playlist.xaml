@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <local:SelectedItemConverter x:Key="selectedItemConverter"></local:SelectedItemConverter>
         <Style TargetType="TextBox">
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -31,8 +32,6 @@
             <Setter Property="Background" Value="DarkGreen"/>
             <Setter Property="Foreground" Value="White"/>
         </Style>
-
-
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -43,26 +42,38 @@
             <Button Style="{StaticResource AdderButton}">Add To Top</Button>
             <Button Style="{StaticResource AdderButton}">Add To Bottom</Button>
         </StackPanel>
-        <ListView Grid.Row="1" ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentPlaylistItem}" HorizontalAlignment="Center">
-            <ListView.ItemTemplate>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Playlist}" Background="LightBlue">
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="350"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button Style="{StaticResource ControlButton}">UP</Button>
-                            <Button Style="{StaticResource ControlButton}">DOWN</Button>
-                            <Button Style="{StaticResource PlayButton}">PLAY</Button>
-                            <TextBox Text="{Binding URL}"/>
+                    <Border Margin="4" Padding="4">
+                        <Border.Background>
+                            <!--
+                            Background="{Binding
+                        RelativeSource={RelativeSource AncestorType=ItemsControl}, 
+                        Path=DataContext.CurrentPlaylistItem,
+                        Converter={StaticResource selectedItemConverter}}-->
+                            <MultiBinding Converter="{StaticResource selectedItemConverter}">
+                                <Binding Path="DataContext.CurrentPlaylistItem" RelativeSource="{RelativeSource AncestorType=ItemsControl}"/>
+                                <Binding/>
 
-                        </StackPanel>
-                        <Button Style="{StaticResource XButton}" Grid.Column="1">X</Button>
-                    </Grid>
+                            </MultiBinding>
+                        </Border.Background>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <Button Style="{StaticResource ControlButton}">UP</Button>
+                                <Button Style="{StaticResource ControlButton}">DOWN</Button>
+                                <Button Style="{StaticResource PlayButton}">PLAY</Button>
+                                <TextBox Text="{Binding URL}" Width="150"/>
+                            </StackPanel>
+                            <Button Style="{StaticResource XButton}" Grid.Column="1" HorizontalAlignment="Right">X</Button>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-            
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>
