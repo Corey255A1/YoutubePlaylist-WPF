@@ -39,8 +39,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-            <Button Style="{StaticResource AdderButton}">Add To Top</Button>
-            <Button Style="{StaticResource AdderButton}">Add To Bottom</Button>
+            <Button Style="{StaticResource AdderButton}"
+                    Command="{Binding Path=AddItemToTopCommand}">Add To Top</Button>
+            <Button Style="{StaticResource AdderButton}"
+                    Command="{Binding Path=AddItemToBottomCommand}">Add To Bottom</Button>
         </StackPanel>
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Playlist}" Background="LightBlue">
             <ItemsControl.ItemTemplate>
