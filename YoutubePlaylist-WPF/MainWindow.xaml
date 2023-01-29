@@ -7,7 +7,8 @@
         xmlns:views="clr-namespace:YoutubePlaylistWPF.Views"
         xmlns:controllers="clr-namespace:YoutubePlaylistWPF.Controllers"
         mc:Ignorable="d"
-        Title="WunderVision Youtube Playlist WPF" Height="450" Width="800">
+        Title="WunderVision Youtube Playlist WPF" Height="640
+        " Width="800">
     <Window.Resources>
         <controllers:PlaylistController x:Key="playlistController"/>
     </Window.Resources>

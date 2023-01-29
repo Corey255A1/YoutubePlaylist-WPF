@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using YoutubePlaylistWPF.Data;
 
 namespace YoutubePlaylistWPF.Controllers
 {
-    public class PlaylistController: INotifyPropertyChanged
+    public class PlaylistController : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private void Notify([CallerMemberName] string name = "")
@@ -24,7 +19,8 @@ namespace YoutubePlaylistWPF.Controllers
         public PlaylistItem? CurrentPlaylistItem
         {
             get { return _currentPlaylistItem; }
-            set {
+            set
+            {
                 _currentPlaylistItem = value;
                 Notify();
             }
@@ -32,9 +28,17 @@ namespace YoutubePlaylistWPF.Controllers
 
 
         public PlaylistCommand PlayItemCommand { get; set; }
+        public PlaylistCommand RemoveItemCommand { get; set; }
+        public PlaylistCommand MoveItemUpCommand { get; set; }
+        public PlaylistCommand MoveItemDownCommand { get; set; }
 
-        public PlaylistController() {
+        public PlaylistController()
+        {
             PlayItemCommand = new PlaylistCommand(PlayItem);
+            RemoveItemCommand = new PlaylistCommand(RemoveItem);
+            MoveItemUpCommand = new PlaylistCommand(MoveItemUp);
+            MoveItemDownCommand = new PlaylistCommand(MoveItemDown);
+
             Playlist = new ObservableCollection<PlaylistItem>()
             {
                 new PlaylistItem()
@@ -57,9 +61,27 @@ namespace YoutubePlaylistWPF.Controllers
             CurrentPlaylistItem = Playlist[1];
         }
 
-        private void PlayItem(PlaylistItem item)
+        public void PlayItem(PlaylistItem item)
         {
             CurrentPlaylistItem = item;
+        }
+        public void RemoveItem(PlaylistItem item)
+        {
+            Playlist.Remove(item);
+        }
+        public void MoveItemUp(PlaylistItem item)
+        {
+            int itemIndex = Playlist.IndexOf(item);
+            if ((itemIndex - 1) < 0) { return; }
+
+            Playlist.Move(itemIndex, itemIndex - 1);
+        }
+        public void MoveItemDown(PlaylistItem item)
+        {
+            int itemIndex = Playlist.IndexOf(item);
+            if ((itemIndex + 1) >= Playlist.Count) { return; }
+
+            Playlist.Move(itemIndex, itemIndex + 1);
         }
     }
 }

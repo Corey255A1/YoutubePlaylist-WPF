@@ -58,14 +58,20 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <Button Style="{StaticResource ControlButton}">UP</Button>
-                                <Button Style="{StaticResource ControlButton}">DOWN</Button>
+                                <Button Style="{StaticResource ControlButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemUpCommand}"
+                                        CommandParameter="{Binding}">UP</Button>
+                                <Button Style="{StaticResource ControlButton}"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemDownCommand}"
+                                        CommandParameter="{Binding}">DOWN</Button>
                                 <Button Style="{StaticResource PlayButton}" 
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.PlayItemCommand}"
                                         CommandParameter="{Binding}">PLAY</Button>
                                 <TextBox Text="{Binding URL}" Width="150"/>
                             </StackPanel>
-                            <Button Style="{StaticResource XButton}" Grid.Column="1" HorizontalAlignment="Right">X</Button>
+                            <Button Style="{StaticResource XButton}" Grid.Column="1" HorizontalAlignment="Right"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.RemoveItemCommand}"
+                                    CommandParameter="{Binding}">X</Button>
                         </Grid>
                     </Border>
                 </DataTemplate>
