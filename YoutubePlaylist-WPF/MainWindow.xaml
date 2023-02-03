@@ -18,7 +18,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <views:Player Grid.Column="0"/>
+        <views:Player Grid.Column="0" WebViewHTMLPath="YoutubePlayer.html"/>
         <views:Playlist Grid.Column="1"/>
 
     </Grid>
