@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Corey Wunderlich WunderVision 2023
+//https://www.wundervisionenvisionthefuture.com/
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -28,6 +30,41 @@ namespace YoutubePlaylistWPF.Controllers
             }
         }
 
+        private string _title = "Nothing Playing";
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                Notify();
+            }
+        }
+
+        private YoutubePlayerState _playerState;
+        public YoutubePlayerState PlayerState
+        {
+            get { return _playerState; }
+            set
+            {
+                _playerState = value;
+                Notify();
+            }
+        }
+
+        private bool _autoPlay;
+        public bool AutoPlay
+        {
+            get { return _autoPlay; }
+            set
+            {
+                _autoPlay = value;
+                Notify();
+            }
+        }
+
+
+
 
         public ICommand PlayItemCommand { get; set; }
         public ICommand PlayNextItemCommand { get; set; }
@@ -37,20 +74,23 @@ namespace YoutubePlaylistWPF.Controllers
         public ICommand MoveItemDownCommand { get; set; }
         public ICommand AddItemToTopCommand { get; set; }
         public ICommand AddItemToBottomCommand { get; set; }
+        public ICommand PlayerStatusCommand { get; set; }
 
         public PlaylistController()
         {
-            PlayItemCommand = new PlaylistItemCommand(PlayItem);
-            
-            RemoveItemCommand = new PlaylistItemCommand(RemoveItem);
-            MoveItemUpCommand = new PlaylistItemCommand(MoveItemUp);
-            MoveItemDownCommand = new PlaylistItemCommand(MoveItemDown);
+            PlayItemCommand = new GenericCommand<PlaylistItem>(PlayItem);
 
-            AddItemToTopCommand = new PlaylistControlCommand(AddItemToTop);
-            AddItemToBottomCommand = new PlaylistControlCommand(AddItemToBottom);
+            RemoveItemCommand = new GenericCommand<PlaylistItem>(RemoveItem);
+            MoveItemUpCommand = new GenericCommand<PlaylistItem>(MoveItemUp);
+            MoveItemDownCommand = new GenericCommand<PlaylistItem>(MoveItemDown);
 
-            PlayNextItemCommand = new PlaylistControlCommand(PlayNextItem);
-            PlayPreviousItemCommand = new PlaylistControlCommand(PlayPreviousItem);
+            AddItemToTopCommand = new GenericCommand(AddItemToTop);
+            AddItemToBottomCommand = new GenericCommand(AddItemToBottom);
+
+            PlayNextItemCommand = new GenericCommand(PlayNextItem);
+            PlayPreviousItemCommand = new GenericCommand(PlayPreviousItem);
+
+            PlayerStatusCommand = new GenericCommand<YoutubeAPIStatus>(PlayerStatusHandler);
 
             Playlist = new ObservableCollection<PlaylistItem>()
             {
@@ -70,8 +110,6 @@ namespace YoutubePlaylistWPF.Controllers
                     ID="3"
                 }
             };
-
-            CurrentPlaylistItem = Playlist[1];
         }
 
         public void AddItemToTop()
@@ -98,7 +136,7 @@ namespace YoutubePlaylistWPF.Controllers
             {
                 itemIndex = Playlist.IndexOf(CurrentPlaylistItem);
             }
-            
+
             if ((itemIndex + 1) >= Playlist.Count) { return; }
 
             PlayItem(Playlist[itemIndex + 1]);
@@ -136,6 +174,16 @@ namespace YoutubePlaylistWPF.Controllers
             if ((itemIndex + 1) >= Playlist.Count) { return; }
 
             Playlist.Move(itemIndex, itemIndex + 1);
+        }
+
+        public void PlayerStatusHandler(YoutubeAPIStatus status)
+        {
+            Title = status.Title;
+            PlayerState = status.State;
+
+            if(AutoPlay && PlayerState == YoutubePlayerState.Ended) {
+                PlayNextItem();
+            }
         }
     }
 }

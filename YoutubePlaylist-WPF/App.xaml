@@ -4,6 +4,63 @@
              xmlns:local="clr-namespace:YoutubePlaylistWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="BackGray" Color="#FF858585"/>
+        <SolidColorBrush x:Key="ContainerGray" Color="#FF545454"/>
+        <SolidColorBrush x:Key="ItemDefault" Color="#FF221199"/>
+        <SolidColorBrush x:Key="ItemHighlight" Color="#FF119922"/>
+        <Style TargetType="Label" x:Key="Header">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="150"/>
+        </Style>
+        <Style TargetType="Button" x:Key="ControlButton">
+            <Setter Property="Width" Value="64"/>
+            <Setter Property="Margin" Value="2 0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Direction="320" Softness="0.2" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                </Border.BitmapEffect>
+                            </Border>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}" >
+                                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="AdderButton">
+            <Setter Property="Width" Value="128"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="DarkGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="XButton">
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Background" Value="DarkRed"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="PlayButton">
+            <Setter Property="Background" Value="DarkGreen"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
     </Application.Resources>
 </Application>

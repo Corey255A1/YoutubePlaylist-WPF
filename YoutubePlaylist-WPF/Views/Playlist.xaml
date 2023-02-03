@@ -7,77 +7,65 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <local:SelectedItemConverter x:Key="selectedItemConverter"></local:SelectedItemConverter>
-        <Style TargetType="TextBox">
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="MinWidth" Value="150"/>
-        </Style>
-        <Style TargetType="Button" x:Key="ControlButton">
-            <Setter Property="Margin" Value="2 0"/>
-        </Style>
-        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="AdderButton">
-            <Setter Property="Width" Value="128"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="XButton">
-            <Setter Property="Width" Value="25"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Background" Value="DarkRed"/>
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-
-        <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="PlayButton">
-            <Setter Property="Background" Value="DarkGreen"/>
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
+        <local:SelectedItemConverter x:Key="selectedItemConverter" 
+                                     SelectedBrush="{StaticResource ItemHighlight}"
+                                     DefaultBrush="{StaticResource ItemDefault}"></local:SelectedItemConverter>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-            <Button Style="{StaticResource AdderButton}"
-                    Command="{Binding Path=AddItemToTopCommand}">Add To Top</Button>
-            <Button Style="{StaticResource AdderButton}"
-                    Command="{Binding Path=AddItemToBottomCommand}">Add To Bottom</Button>
-        </StackPanel>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding Playlist}" Background="LightBlue">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border Margin="4" Padding="4">
-                        <Border.Background>
-                            <MultiBinding Converter="{StaticResource selectedItemConverter}">
-                                <Binding Path="DataContext.CurrentPlaylistItem" RelativeSource="{RelativeSource AncestorType=ItemsControl}"/>
-                                <Binding/>
-                            </MultiBinding>
-                        </Border.Background>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="300"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                <Button Style="{StaticResource ControlButton}"
-                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemUpCommand}"
-                                        CommandParameter="{Binding}">UP</Button>
-                                <Button Style="{StaticResource ControlButton}"
-                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemDownCommand}"
-                                        CommandParameter="{Binding}">DOWN</Button>
-                                <Button Style="{StaticResource PlayButton}" 
-                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.PlayItemCommand}"
-                                        CommandParameter="{Binding}">PLAY</Button>
-                                <TextBox Text="{Binding URL}" Width="150"/>
-                            </StackPanel>
-                            <Button Style="{StaticResource XButton}" Grid.Column="1" HorizontalAlignment="Right"
-                                    Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.RemoveItemCommand}"
-                                    CommandParameter="{Binding}">X</Button>
+    <Border  Background="{StaticResource BackGray}" CornerRadius="4">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
+                <Button Style="{StaticResource AdderButton}"
+                        Command="{Binding Path=AddItemToTopCommand}">Add To Top</Button>
+                <Button Style="{StaticResource AdderButton}"
+                        Command="{Binding Path=AddItemToBottomCommand}">Add To Bottom</Button>
+            </StackPanel>
+
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Playlist}" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="4">
+                            <Border CornerRadius="4" Background="Black">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Direction="320" Softness="0.2" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                </Border.BitmapEffect>
+                            </Border>
+                            <Border CornerRadius="4" Padding="4">
+                                <Border.Background>
+                                    <MultiBinding Converter="{StaticResource selectedItemConverter}">
+                                        <Binding Path="DataContext.CurrentPlaylistItem" RelativeSource="{RelativeSource AncestorType=ItemsControl}"/>
+                                        <Binding/>
+                                    </MultiBinding>
+                                </Border.Background>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <Button Style="{StaticResource ControlButton}"
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemUpCommand}"
+                                                CommandParameter="{Binding}">UP</Button>
+                                        <Button Style="{StaticResource ControlButton}"
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemDownCommand}"
+                                                CommandParameter="{Binding}">DOWN</Button>
+                                        <Button Style="{StaticResource PlayButton}" 
+                                                Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.PlayItemCommand}"
+                                                CommandParameter="{Binding}">PLAY</Button>
+                                        <TextBox Text="{Binding URL}" Width="150"/>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource XButton}" Grid.Column="1" HorizontalAlignment="Right"
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.RemoveItemCommand}"
+                                            CommandParameter="{Binding}">X</Button>
+                                </Grid>
+                            </Border>
                         </Grid>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </Border>
 </UserControl>

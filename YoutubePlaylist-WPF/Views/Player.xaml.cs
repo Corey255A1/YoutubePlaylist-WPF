@@ -1,22 +1,15 @@
-﻿using Microsoft.Web.WebView2.Core;
-using System;
+﻿//Corey Wunderlich WunderVision 2023
+//https://www.wundervisionenvisionthefuture.com/
+using Microsoft.Web.WebView2.Core;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using YoutubePlaylistWPF.Data;
 
 namespace YoutubePlaylistWPF.Views
 {
     public partial class Player : UserControl
     {
-
-        public string YoutubeTitle
-        {
-            get { return (string)GetValue(YoutubeTitleProperty); }
-            set { SetValue(YoutubeTitleProperty, value); }
-        }
-
-        public static readonly DependencyProperty YoutubeTitleProperty =
-            DependencyProperty.Register("YoutubeTitle", typeof(string), typeof(Player), new PropertyMetadata(""));
-
 
         public string WebViewHTMLPath
         {
@@ -26,6 +19,28 @@ namespace YoutubePlaylistWPF.Views
 
         public static readonly DependencyProperty WebViewHTMLPathProperty =
             DependencyProperty.Register("WebViewHTMLPath", typeof(string), typeof(Player), new PropertyMetadata(""));
+
+
+
+        public ICommand YoutubePlayerStatusReceived
+        {
+            get { return (ICommand)GetValue(YoutubePlayerStatusReceivedProperty); }
+            set { SetValue(YoutubePlayerStatusReceivedProperty, value); }
+        }
+
+        public static readonly DependencyProperty YoutubePlayerStatusReceivedProperty =
+            DependencyProperty.Register("YoutubePlayerStatusReceived", typeof(ICommand), typeof(Player), new PropertyMetadata(null));
+
+
+
+        public string YoutubeVideoURL
+        {
+            get { return (string)GetValue(YoutubeVideoURLProperty); }
+            set { SetValue(YoutubeVideoURLProperty, value); }
+        }
+
+        public static readonly DependencyProperty YoutubeVideoURLProperty =
+            DependencyProperty.Register("YoutubeVideoURL", typeof(string), typeof(Player), new PropertyMetadata("", OnYoutubeVideoURLChanged));
 
 
         public Player()
@@ -44,9 +59,15 @@ namespace YoutubePlaylistWPF.Views
 
         private void YoutubeWebviewWebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs e)
         {
-            //string[] response = e.WebMessageAsJson.Trim('"').Split(':', 2);
-            Data.YoutubeAPIStatus? status = System.Text.Json.JsonSerializer.Deserialize<Data.YoutubeAPIStatus>(e.WebMessageAsJson);
-            YoutubeTitle = status?.Title ?? "ERROR";
+            YoutubeAPIStatus? status = System.Text.Json.JsonSerializer.Deserialize<Data.YoutubeAPIStatus>(e.WebMessageAsJson);
+            if (status == null) { return; }
+
+            YoutubePlayerStatusReceived?.Execute(status);
+        }
+
+        private static void OnYoutubeVideoURLChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Player)d).PlayVideo((string)e.NewValue);
         }
 
         private void PlayClick(object sender, System.Windows.RoutedEventArgs e)
@@ -58,5 +79,12 @@ namespace YoutubePlaylistWPF.Views
         {
             webView.ExecuteScriptAsync("pause()");
         }
+
+        private void PlayVideo(string id)
+        {
+            webView.ExecuteScriptAsync($"loadVideoById(\"{id}\",0)");
+        }
+
+
     }
 }

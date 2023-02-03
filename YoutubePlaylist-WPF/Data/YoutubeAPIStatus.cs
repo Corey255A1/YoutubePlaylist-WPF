@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿//Corey Wunderlich WunderVision 2023
+//https://www.wundervisionenvisionthefuture.com/
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace YoutubePlaylistWPF.Data
 {
@@ -20,6 +17,7 @@ namespace YoutubePlaylistWPF.Data
     {
         [JsonPropertyName("title")]
         public string Title { get; set; } = "";
+
         [JsonPropertyName("state")]
         public YoutubePlayerState State { get; set; }
     }

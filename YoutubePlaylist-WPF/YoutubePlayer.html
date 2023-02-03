@@ -1,62 +1,59 @@
 <html>
+    <head>
+        <style>
+            html, body {
+                background: lightgray;
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+            }
 
-<head>
-    <style>
-        html,
-        body {
-            background: lightgray;
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
-        }
+            iframe {
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
 
-        iframe {
-            border: none;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-</head>
+    <body>
+        <iframe width=" 300" height=" 300" src="https://www.youtube.com/embed/?enablejsapi=1&mute=1"
+                allow=" accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen id="wpf-player"></iframe>
+        <script>
+            let youtubePlayer = null;
+            function playerStateChangeHandler(e) {
+                //Post the JSON object to the webview DON'T Stringify!
+                chrome.webview.postMessage({state:e.data, title:e.target.videoTitle});
+            }
+            function play() {
+                if (youtubePlayer != null) { youtubePlayer.playVideo(); }
+            }
+            function pause() {
+                if (youtubePlayer != null) { youtubePlayer.pauseVideo(); }
+            }
 
-<body>
-    <iframe width=" 300" height=" 300" src="https://www.youtube.com/embed/KFBgEsjaJoc?enablejsapi=1&mute=1"
-            allow=" accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen id="wpf-player"></iframe>
-    <script>
-        let youtubePlayer = null;
-        function playerStateChangeHandler(e) {
-            //Post the JSON object to the webview DON'T Stringify!
-            chrome.webview.postMessage({state:e.data, title:e.target.videoTitle});
-        }
-        function play() {
-            if (youtubePlayer != null) { youtubePlayer.playVideo(); }
-        }
-        function pause() {
-            if (youtubePlayer != null) { youtubePlayer.pauseVideo(); }
-        }
+            function loadVideoById(videoId, startSeconds) {
+                if (youtubePlayer != null) { youtubePlayer.loadVideoById(videoId, startSeconds); }
+            }
 
-        function loadVideoById(videoId, startSeconds) {
-            if (youtubePlayer != null) { youtubePlayer.loadVideoById(videoId, startSeconds); }
-        }
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
 
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
+            // onYouTubeIframeAPIReady will load the video after the script is loaded
+            window.onYouTubeIframeAPIReady = () => {
+                const playerFrame = new window.YT.Player('wpf-player',
+                    {
+                        events: {
+                            'onReady': (event) => { youtubePlayer = event.target },
+                            'onStateChange': playerStateChangeHandler
+                        }
+                    });
 
-        // onYouTubeIframeAPIReady will load the video after the script is loaded
-        window.onYouTubeIframeAPIReady = () => {
-            const playerFrame = new window.YT.Player('wpf-player',
-                {
-                    events: {
-                        'onReady': (event) => { youtubePlayer = event.target },
-                        'onStateChange': playerStateChangeHandler
-                    }
-                });
+            }
 
-        }
-
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-    </script>
-</body>
-
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+        </script>
+    </body>
 </html>

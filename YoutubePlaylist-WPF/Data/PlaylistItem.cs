@@ -1,4 +1,6 @@
-﻿namespace YoutubePlaylistWPF.Data
+﻿//Corey Wunderlich WunderVision 2023
+//https://www.wundervisionenvisionthefuture.com/
+namespace YoutubePlaylistWPF.Data
 {
     public class PlaylistItem
     {

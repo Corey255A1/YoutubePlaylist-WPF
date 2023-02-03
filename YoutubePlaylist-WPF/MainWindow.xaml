@@ -7,19 +7,21 @@
         xmlns:views="clr-namespace:YoutubePlaylistWPF.Views"
         xmlns:controllers="clr-namespace:YoutubePlaylistWPF.Controllers"
         mc:Ignorable="d"
-        Title="WunderVision Youtube Playlist WPF" Height="640
-        " Width="800">
+        Title="WunderVision Youtube Playlist WPF" Height="640" Width="800" Background="{StaticResource ContainerGray}">
     <Window.Resources>
         <controllers:PlaylistController x:Key="playlistController"/>
     </Window.Resources>
-    <Grid DataContext="{Binding Source={StaticResource playlistController}}">
+    <Grid DataContext="{Binding Source={StaticResource playlistController}}" Margin="4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <views:Player Grid.Column="0" WebViewHTMLPath="YoutubePlayer.html"/>
-        <views:Playlist Grid.Column="1"/>
+        <views:Player Grid.Column="0" 
+                      WebViewHTMLPath="YoutubePlayer.html"
+                      YoutubeVideoURL="{Binding CurrentPlaylistItem.URL}"
+                      YoutubePlayerStatusReceived="{Binding PlayerStatusCommand}" Margin="4" />
+        <views:Playlist Grid.Column="1" Margin="4"/>
 
     </Grid>
 </Window>
