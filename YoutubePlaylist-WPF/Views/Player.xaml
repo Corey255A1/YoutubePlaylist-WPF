@@ -23,7 +23,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="4">
             <Button Style="{StaticResource ControlButton}" 
                     Command="{Binding Path=PlayPreviousItemCommand}">Previous</Button>
-            <Button Style="{StaticResource ControlButton}" Click="PlayClick">Play</Button>
+            <Button Style="{StaticResource PlayButton}" Click="PlayClick">Play</Button>
             <Button Style="{StaticResource ControlButton}" Click="PauseClick">Pause</Button>
             <Button Style="{StaticResource ControlButton}"
                     Command="{Binding Path=PlayNextItemCommand}">Next</Button>
