@@ -21,11 +21,11 @@
             <wpf:WebView2 DefaultBackgroundColor="Black" Name="webView"></wpf:WebView2>
         </Border>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="4">
-            <Button Style="{StaticResource ControlButton}" 
+            <Button Style="{StaticResource PreviousButton}" 
                     Command="{Binding Path=PlayPreviousItemCommand}">Previous</Button>
             <Button Style="{StaticResource PlayButton}" Click="PlayClick">Play</Button>
-            <Button Style="{StaticResource ControlButton}" Click="PauseClick">Pause</Button>
-            <Button Style="{StaticResource ControlButton}"
+                <Button Style="{StaticResource PauseButton}" Click="PauseClick"></Button>
+            <Button Style="{StaticResource NextButton}"
                     Command="{Binding Path=PlayNextItemCommand}">Next</Button>
         </StackPanel>
 

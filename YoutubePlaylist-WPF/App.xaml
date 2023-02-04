@@ -41,6 +41,14 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="AliceBlue"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="Button" BasedOn="{StaticResource ControlButton}" x:Key="SquareButton">
             <Setter Property="Width" Value="25"/>
@@ -118,6 +126,84 @@
                             </Border>
                             <Border CornerRadius="4" Background="{TemplateBinding Background}" >
                                 <Polygon Stretch="Uniform" Points="0,0 20,0 10,20" Fill="Black" Margin="4"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource SquareButton}" x:Key="PauseButton">
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Direction="320" Softness="0.2" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                </Border.BitmapEffect>
+                            </Border>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Viewbox Margin="4">
+                                    <Canvas HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="20" Height="20">
+                                        <Polygon Points="4,0 8,0 8,20 4,20" Fill="White"/>
+                                        <Polygon Points="16,0 12,0 12,20 16,20" Fill="white"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource SquareButton}" x:Key="NextButton">
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Direction="320" Softness="0.2" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                </Border.BitmapEffect>
+                            </Border>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Viewbox Margin="4">
+                                    <Canvas HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="20" Height="20">
+                                        <Polygon Points="4,0 8,0 8,20 4,20" Fill="White"/>
+                                        <Polygon Points="12,0 12,20 20,10" Fill="white"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" BasedOn="{StaticResource SquareButton}" x:Key="PreviousButton">
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Direction="320" Softness="0.2" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                </Border.BitmapEffect>
+                            </Border>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Viewbox Margin="4">
+                                    <Canvas HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="20" Height="20">
+                                        <Polygon Points="8,0 8,20 0,10" Fill="White"/>
+                                        <Polygon Points="16,0 12,0 12,20 16,20" Fill="white"/>
+                                    </Canvas>
+                                </Viewbox>
                             </Border>
                         </Grid>
                     </ControlTemplate>

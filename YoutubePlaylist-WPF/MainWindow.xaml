@@ -12,16 +12,22 @@
         <controllers:PlaylistController x:Key="playlistController"/>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource playlistController}}" Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <views:Player Grid.Column="0" 
+        <Label Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="24" Foreground="White" FontWeight="Bold">WunderVision Youtube Player - WPF</Label>
+
+        <views:Player Grid.Row="1"  Grid.Column="0" 
                       WebViewHTMLPath="YoutubePlayer.html"
                       YoutubeVideoURL="{Binding CurrentPlaylistItem.URL}"
                       YoutubePlayerStatusReceived="{Binding PlayerStatusCommand}" Margin="4" />
-        <views:Playlist Grid.Column="1" Margin="4"/>
+        <views:Playlist Grid.Row="1" Grid.Column="1" Margin="4"/>
 
     </Grid>
 </Window>
