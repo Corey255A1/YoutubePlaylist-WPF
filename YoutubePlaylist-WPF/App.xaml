@@ -80,6 +80,50 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+
+        <Style TargetType="Button" BasedOn="{StaticResource SquareButton}" x:Key="UpButton">
+            <Setter Property="Background" Value="Yellow"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Direction="320" Softness="0.2" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                </Border.BitmapEffect>
+                            </Border>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}" >
+                                <Polygon Stretch="Uniform" Points="0,20 20,20 10,0" Fill="Black" Margin="4"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style TargetType="Button" BasedOn="{StaticResource SquareButton}" x:Key="DownButton">
+            <Setter Property="Background" Value="Yellow"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Direction="320" Softness="0.2" ShadowDepth="3" Opacity="0.5" Color="Black"/>
+                                </Border.BitmapEffect>
+                            </Border>
+                            <Border CornerRadius="4" Background="{TemplateBinding Background}" >
+                                <Polygon Stretch="Uniform" Points="0,0 20,0 10,20" Fill="Black" Margin="4"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

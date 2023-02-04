@@ -46,10 +46,10 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                        <Button Style="{StaticResource ControlButton}"
+                                        <Button Style="{StaticResource UpButton}"
                                                 Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemUpCommand}"
                                                 CommandParameter="{Binding}">UP</Button>
-                                        <Button Style="{StaticResource ControlButton}"
+                                        <Button Style="{StaticResource DownButton}"
                                                 Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.MoveItemDownCommand}"
                                                 CommandParameter="{Binding}">DOWN</Button>
                                         <Button Style="{StaticResource PlayButton}" 
